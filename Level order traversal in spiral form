@@ -21,7 +21,6 @@ class queue{
 
     }
     boolean isEmpty(){
-//        System.out.println();
         return queue.isEmpty();
     }
 }
@@ -34,12 +33,12 @@ class tree{
         boolean leftToRight=true;
         int c=0;
         List<node>list=new ArrayList<node>();
-        while(!q.isEmpty()&&c<=10){
+        while(!q.isEmpty()){
             node n=q.pop();
             if(n==null){
                 q.add(null);
                 if(q.queue.size()==1&&q.queue.get(0)==null){
-                    c++;
+                    q.pop();
                 }
                 if(leftToRight){
                     leftToRight=false;
@@ -79,10 +78,10 @@ public class Implementation {
         tree.root = new node(1);
         tree.root.left = new node(2);
         tree.root.right = new node(3);
-        tree.root.left.left = new node(7);
-        tree.root.left.right = new node(6);
-        tree.root.right.left = new node(5);
-        tree.root.right.right = new node(4);
+        tree.root.left.left = new node(4);
+        tree.root.left.right = new node(5);
+        tree.root.right.left = new node(6);
+        tree.root.right.right = new node(7);
         tree.spiralView();
     }
 }
