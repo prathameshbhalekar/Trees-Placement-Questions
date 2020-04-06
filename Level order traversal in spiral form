@@ -1,87 +1,105 @@
-import java.util.ArrayList;
-import java.util.List;
-
-class node{
-    int data;
-    node left;
-    node right;
-    node(int data){
-        this.data=data;
-        left=null;
-        right=null;
+  import java.util.ArrayList;
+    import java.util.List;
+    class node{
+        int data;
+        node left;
+        node right;
+        node(int data){
+            this.data=data;
+            left=null;
+            right=null;
+        }
     }
-}
-class queue{
-    List<node> queue=new ArrayList<node>();
-    void add(node n){
-        queue.add(n);
-    }
-    node pop(){
-        return queue.remove(0);
-
-    }
-    boolean isEmpty(){
-        return queue.isEmpty();
-    }
-}
-class tree{
-    node root;
-    void spiralView(){
-        queue q=new queue();
-        q.add(root);
-        q.add(null);
-        boolean leftToRight=true;
-        int c=0;
-        List<node>list=new ArrayList<node>();
-        while(!q.isEmpty()){
-            node n=q.pop();
-            if(n==null){
-                q.add(null);
-                if(q.queue.size()==1&&q.queue.get(0)==null){
-                    q.pop();
-                }
-                if(leftToRight){
-                    leftToRight=false;
-                    for(int i=0;i<list.size();i++){
-                        System.out.print(list.get(i).data+",");
-                    }
-                }
-                else{
-                    leftToRight=true;
-                    for(int i=list.size()-1;i>=0;i--){
-                        System.out.print(list.get(i).data+",");
-                    }
-                }
-                list.clear();
-
+    class queue{
+        List<node> queue=new ArrayList<node>();
+        void add(node n){
+            queue.add(n);
+        }
+        node rpop(){
+            int pos=queue.indexOf(null);
+            if(pos==0){
+                return queue.remove(pos);
             }
             else{
-                if(n!=null){
-                    list.add(n);
+                return queue.remove(pos-1);
+            }
+        }
+        node pop(){
+            return queue.remove(0);
+
+        }
+        boolean isEmpty(){
+            return queue.isEmpty();
+
+        }
+    }
+    class tree{
+        node root;
+        void spiralView(){
+            queue q=new queue();
+            q.add(root);
+            q.add(null);
+            boolean leftToRight=true;
+            int c=0;
+            List<node>list=new ArrayList<node>();
+            while(!q.isEmpty()){
+                node n;
+                if(leftToRight){
+                    n=q.pop();
                 }
-                if(n.left!=null){
-                    q.add(n.left);
+                else{
+                    n=q.rpop();
                 }
-                if(n.right!=null){
-                    q.add(n.right);
+                if(n==null){
+                    q.add(null);
+                    if(q.queue.size()==1&&q.queue.get(0)==null){
+                        q.pop();
+                    }
+                    if(leftToRight){
+                        leftToRight=false;
+
+                    }
+                    else{
+                        leftToRight=true;
+
+                    }
+                    list.clear();
+
+                }
+                else{
+                    if(n!=null){
+                        if(leftToRight){
+                            System.out.print(n.data+",");
+                        }
+                        else {
+                            System.out.print(n.data+",");
+                        }
+                    }
+                    if(n.left!=null){
+                        q.add(n.left);
+                    }
+                    if(n.right!=null){
+                        q.add(n.right);
+                    }
                 }
             }
         }
+
     }
 
-}
 
-
-public class Implementation {
-    public static void main(String []args){
-        tree tree=new tree();
-        tree.root = new node(1);
-        tree.root.left = new node(2);
-        tree.root.right = new node(3);
-        tree.root.left.left = new node(4);
-        tree.root.left.right = new node(5);
-        tree.root.right.left = new node(6);
-        tree.root.right.right = new node(7);
-        tree.spiralView();
+    public class Implementation {
+        public static void main(String []args){
+            tree tree=new tree();
+            tree.root=new node(8);
+            tree.root.left = new node(3);
+            tree.root.right = new node(10);
+            tree.root.left.left = new node(1);
+            tree.root.left.right = new node(6);
+            tree.root.right.right = new node(14);
+            tree.root.right.right.left = new node(13);
+            tree.root.left.right.left = new node(4);
+            tree.root.left.right.right = new node(7);
+            tree.spiralView();
+        }
     }
-}
