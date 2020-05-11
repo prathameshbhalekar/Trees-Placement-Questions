@@ -1,5 +1,6 @@
-  import java.util.ArrayList;
-    import java.util.List;
+   //~~~~~~~~~~~~~~~~~~~~~~~
+    import java.util.*;
+
     class node{
         int data;
         node left;
@@ -10,78 +11,44 @@
             right=null;
         }
     }
-    class queue{
-        List<node> queue=new ArrayList<node>();
-        void add(node n){
-            queue.add(n);
-        }
-        node rpop(){
-            int pos=queue.indexOf(null);
-            if(pos==0){
-                return queue.remove(pos);
-            }
-            else{
-                return queue.remove(pos-1);
-            }
-        }
-        node pop(){
-            return queue.remove(0);
 
-        }
-        boolean isEmpty(){
-            return queue.isEmpty();
-
-        }
-    }
     class tree{
         node root;
+        boolean check=false;
         void spiralView(){
-            queue q=new queue();
+            Queue<node>q=new LinkedList<node>();
             q.add(root);
-            q.add(null);
-            boolean leftToRight=true;
-            int c=0;
-            List<node>list=new ArrayList<node>();
             while(!q.isEmpty()){
-                node n;
-                if(leftToRight){
-                    n=q.pop();
-                }
-                else{
-                    n=q.rpop();
-                }
-                if(n==null){
-                    q.add(null);
-                    if(q.queue.size()==1&&q.queue.get(0)==null){
-                        q.pop();
+                int size=q.size();
+                Stack<node> s=new Stack<node>();
+                for(int i=0;i<size;i++){
+                    node poped=q.remove();
+                    if(poped!=null) {
+                        System.out.print(poped.data + ",");
                     }
-                    if(leftToRight){
-                        leftToRight=false;
-
-                    }
-                    else{
-                        leftToRight=true;
-
-                    }
-                    list.clear();
-
-                }
-                else{
-                    if(n!=null){
-                        if(leftToRight){
-                            System.out.print(n.data+",");
+                    if(check&&poped!=null) {
+                        if (poped.left != null) {
+                            s.push(poped.left);
                         }
-                        else {
-                            System.out.print(n.data+",");
+                        if (poped.right != null) {
+                            s.push(poped.right);
                         }
                     }
-                    if(n.left!=null){
-                        q.add(n.left);
-                    }
-                    if(n.right!=null){
-                        q.add(n.right);
+                    if(!check&&poped!=null){
+                        if (poped.right != null) {
+                            s.push(poped.right);
+                        }
+                        if (poped.left != null) {
+                            s.push(poped.left);
+                        }
                     }
                 }
+
+                while(!s.isEmpty()){
+                    q.add(s.pop());
+                }
+                check=!check;
+//                System.out.println(q.size());
             }
         }
 
